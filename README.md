@@ -1,6 +1,6 @@
 # Geometric Graph Convolutional Neural Networks
 
-This repository contains an implementation of [Geometric Graph Convolutional Neural Networks(geo-GCN)](https://www.google.com).
+This repository contains an implementation of [Geometric Graph Convolutional Neural Networks(geo-GCN)](https://arxiv.org/abs/1909.05310).
 
 # Dependencies
 
