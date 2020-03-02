@@ -25,7 +25,7 @@ class GraphConv(MessagePassing):
         edge_index - graph connectivity [2, num_edges]
         """
 
-        edge_index = add_self_loops(edge_index, num_nodes=x.size(0))  # num_edges = num_edges + num_nodes
+        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))  # num_edges = num_edges + num_nodes
 
         return self.propagate(edge_index=edge_index, x=x, pos=pos, aggr='add')  # [N, out_channels, label_dim]
 
