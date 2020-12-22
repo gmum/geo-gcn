@@ -1,6 +1,6 @@
-# Geometric Graph Convolutional Neural Networks
+# Spatial Graph Convolutional Networks
 
-This repository contains an implementation of [Geometric Graph Convolutional Neural Networks(geo-GCN)](https://arxiv.org/abs/1909.05310).
+This repository contains an implementation of [Spatial Graph Convolutional Neural Networks (SGCN)](https://arxiv.org/abs/1909.05310).
 
 # Dependencies
 

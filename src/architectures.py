@@ -1,29 +1,30 @@
 import torch
 import torch.nn.functional as F
 import torch_geometric.transforms as T
-from graph_conv import GraphConv
-from normalized_cut_2d import normalized_cut_2d
 from torch_geometric.nn import graclus, max_pool, global_mean_pool
 
+from graph_conv import SpatialGraphConv
+from normalized_cut_2d import normalized_cut_2d
 
-class GeoGC(torch.nn.Module):
+
+class SGCN(torch.nn.Module):
     def __init__(self, dim_coor, out_dim, input_features,
                  layers_num, model_dim, out_channels_1, dropout,
                  use_cluster_pooling):
-        super(GeoGC, self).__init__()
+        super(SGCN, self).__init__()
         self.layers_num = layers_num
         self.use_cluster_pooling = use_cluster_pooling
 
-        self.conv_layers = [GraphConv(coors=dim_coor,
-                                      out_channels_1=out_channels_1,
-                                      out_features=model_dim,
-                                      label_dim=input_features,
-                                      dropout=dropout)] + \
-                           [GraphConv(coors=dim_coor,
-                                      out_channels_1=out_channels_1,
-                                      out_features=model_dim,
-                                      label_dim=model_dim,
-                                      dropout=dropout) for _ in range(layers_num - 1)]
+        self.conv_layers = [SpatialGraphConv(coors=dim_coor,
+                                             in_channels=input_features,
+                                             out_channels=model_dim,
+                                             hidden_size=out_channels_1,
+                                             dropout=dropout)] + \
+                           [SpatialGraphConv(coors=dim_coor,
+                                             in_channels=model_dim,
+                                             out_channels=model_dim,
+                                             hidden_size=out_channels_1,
+                                             dropout=dropout) for _ in range(layers_num - 1)]
 
         self.conv_layers = torch.nn.ModuleList(self.conv_layers)
 

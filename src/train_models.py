@@ -4,9 +4,10 @@ import os
 import torch
 import torch.nn.functional as F
 import torch_geometric.transforms as T
-from architectures import GeoGC
 from torch_geometric.data import DataLoader
 from torch_geometric.datasets import MNISTSuperpixels
+
+from architectures import SGCN
 
 parser = argparse.ArgumentParser()
 
@@ -39,14 +40,14 @@ train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=Tru
 test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=True)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = GeoGC(dim_coor=args.dim_coor,
-              out_dim=args.out_dim,
-              input_features=args.label_dim,
-              layers_num=args.layers_num,
-              model_dim=args.model_dim,
-              out_channels_1=args.out_channels_1,
-              dropout=args.dropout,
-              use_cluster_pooling=args.use_cluster_pooling).to(device)
+model = SGCN(dim_coor=args.dim_coor,
+             out_dim=args.out_dim,
+             input_features=args.label_dim,
+             layers_num=args.layers_num,
+             model_dim=args.model_dim,
+             out_channels_1=args.out_channels_1,
+             dropout=args.dropout,
+             use_cluster_pooling=args.use_cluster_pooling).to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
